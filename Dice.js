@@ -2,7 +2,7 @@ class Dice extends SceneObject {
     constructor(x,y,z, side_size) {
         super()
 
-        let dice = super.createSceneObjBox(0,0,0, side_size, side_size, side_size, new THREE.MeshBasicMaterial({color : 'blue'}))
+        let dice = super.createSceneObjBox(0,0,0, side_size, side_size, side_size, new THREE.MeshPhongMaterial({color : 'blue'}))
         dice.rotateX(Math.PI / 4) // 45º
         //dice.rotateY(Math.PI / 4)
         dice.rotateZ(Math.PI / 4) // 45º

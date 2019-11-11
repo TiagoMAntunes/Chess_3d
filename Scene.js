@@ -22,6 +22,13 @@ function createScene() {
     let ball = new Ball(-15, 0, 0, 0, 4, 0)
     dice = new Dice(0,3.7,0, 3)
 
+    let light_focus = new THREE.Object3D()
+    light_focus.position.set(-1,0,0)
+    scene.add(light_focus)
+
+    directional_light = new THREE.DirectionalLight("white", 1)
+    directional_light.target = light_focus
+    scene.add(directional_light)
     scene.add(board)
     scene.add(ball)
     scene.add(dice)
@@ -46,6 +53,6 @@ function update() {
 
 function createCameras() {
     active_camera = new THREE.PerspectiveCamera(60, window.outerWidth / window.outerHeight, 1, 1000);
-    active_camera.position.set(10,5,20)
-    active_camera.lookAt(0,10,0)
+    active_camera.position.set(15,20,40)
+    active_camera.lookAt(0,0,0)
 }
