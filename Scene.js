@@ -10,6 +10,7 @@ function render() {
     renderer.render(scene, active_camera);
 }
 
+var dice
 function createScene() {
     'use strict'
 
@@ -19,14 +20,16 @@ function createScene() {
 
     let board = new Board(0,0,0,5)
     let ball = new Ball(-15, 0, 0, 0, 4, 0)
+    dice = new Dice(0,3.7,0, 3)
 
     scene.add(board)
     scene.add(ball)
+    scene.add(dice)
 }
 
 function traverseElements(obj) {
     if (obj instanceof SceneObject)
-        obj.update(current_time_offset)
+        obj.update(current_time_offset/40)
     if (obj !== undefined)
         for (i in obj.children)
             traverseElements(obj.children[i])
@@ -43,6 +46,6 @@ function update() {
 
 function createCameras() {
     active_camera = new THREE.PerspectiveCamera(60, window.outerWidth / window.outerHeight, 1, 1000);
-    active_camera.position.set(35,30,20)
+    active_camera.position.set(10,5,20)
     active_camera.lookAt(0,10,0)
 }

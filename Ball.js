@@ -16,7 +16,7 @@ class Ball extends SceneObject {
 
     update(time_compensation) {
         //Rotate center -> Move ball around it
-        this.rotateY(Math.PI * 2 / 180 * time_compensation / 40)
+        this.rotateY(Math.PI * 2 / 360 * time_compensation)
 
     }
 }

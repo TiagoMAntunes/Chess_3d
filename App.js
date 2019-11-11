@@ -10,34 +10,15 @@ function onKeyDown(e) {
       break
       case 50: //2
       switches[1] = true
-      
       break
       case 51: //3
       switches[2] = true
-      
       break
       case 52: //4
       switches[3] = true
-      
       break
 
-      case 53: //5
-      active_camera = persp_camera
       
-      break
-      case 54: //6
-      active_camera = ortog_camera
-      
-      break
-      case 81 || 113:  //Q ou q
-      directional_light.visible = !directional_light.visible
-      break
-      case 87 || 119:  //W ou w
-      lighting_calc = !lighting_calc
-      break
-      case 69 || 101:  //E ou e
-      lambert = !lambert
-      break
       
   }
 }
