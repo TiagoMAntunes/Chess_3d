@@ -62,4 +62,8 @@ class SceneObject extends THREE.Object3D {
     getPosition(){
         return this.position
     }
+
+    update() {
+        
+    }
 }
