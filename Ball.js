@@ -6,17 +6,16 @@ class Ball extends SceneObject {
         //x,y,z ball position relative to the center
         let ball = super.createSceneObjSphere(0,3,0,3, 20, 20, 0, Math.PI * 2, new THREE.MeshPhongMaterial({color: 'red'}))
         this.add(ball)
+        ball.add(new THREE.AxisHelper(5))
         
         ball.position.set(x,y,z)
-        this.position.set(c1,c2,c3)
-
-     
+        this.position.set(c1,c2,c3)    
     }
 
 
     update(time_compensation) {
         //Rotate center -> Move ball around it
         this.rotateY(Math.PI * 2 / 360 * time_compensation)
-
+        this.children[0].rotateY(Math.PI * 2 / 360 * time_compensation)
     }
 }

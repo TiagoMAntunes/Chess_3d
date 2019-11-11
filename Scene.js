@@ -2,7 +2,7 @@ var persp_camera, ortog_camera //cameras
 var scene, active_camera
 var pedestal, icosahedron, painting
 var spotlights = []
-var directional_light
+var directional_light, point_light
 
 let current_time_offset, prev_time, curr_time
 
@@ -23,12 +23,17 @@ function createScene() {
     dice = new Dice(0,3.7,0, 3)
 
     let light_focus = new THREE.Object3D()
-    light_focus.position.set(-1,0,0)
+    light_focus.position.set(-1,0, 1)
     scene.add(light_focus)
 
-    directional_light = new THREE.DirectionalLight("white", 1)
+    directional_light = new THREE.DirectionalLight("white", 1.7)
     directional_light.target = light_focus
     scene.add(directional_light)
+
+    point_light = new THREE.PointLight("white", 2)
+    point_light.position.set(-5,10, -5)
+    scene.add(point_light)
+
     scene.add(board)
     scene.add(ball)
     scene.add(dice)
@@ -47,6 +52,23 @@ function update() {
     prev_time = curr_time
     curr_time = performance.now()
     current_time_offset = prev_time === undefined ? 1 : curr_time - prev_time
+
+    if (switches[4]) {
+        switches[4] = false
+        if (directional_light.intensity === 0)
+            directional_light.intensity = 2
+        else
+            directional_light.intensity = 0
+    } 
+
+    if (switches[5]) {
+        switches[5] = false
+        if (point_light.intensity === 0)
+            point_light.intensity = 2
+        else
+            point_light.intensity = 0
+        console.log(point_light.intensity)
+    }
 
     traverseElements(scene)
 }
