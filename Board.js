@@ -3,6 +3,8 @@ class Board extends SceneObject {
         super()
         
         let board = new THREE.Object3D()
+        board.add(super.createSceneObjBox(0,0,0, side_size, 2, side_size, new THREE.MeshPhongMaterial({color: "black"})))
+        /*
         let black = false
         for (let i = -17.5; i < 20; i += 5) {
             black = !black
@@ -11,7 +13,7 @@ class Board extends SceneObject {
                 black = !black
             }
         }
-        
+        */
         this.add(board)
 
         

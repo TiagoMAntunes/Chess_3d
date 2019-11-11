@@ -1,5 +1,6 @@
 var renderer, wireframe = true
 var switches = [false, false, false, false, false, false]
+var wireframe = false
 
 
 function onKeyDown(e) {
@@ -26,7 +27,12 @@ function onKeyDown(e) {
       case 112:
           switches[5] = true
           break
-      
+
+      case 87:
+      case 119:
+          wireframe = !wireframe
+          console.log('oi')
+          break
       
   }
 }

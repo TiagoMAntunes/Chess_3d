@@ -3,7 +3,7 @@ var scene, active_camera
 var pedestal, icosahedron, painting
 var spotlights = []
 var directional_light, point_light
-
+var board
 let current_time_offset, prev_time, curr_time
 
 function render() {
@@ -18,7 +18,7 @@ function createScene() {
     scene.add(new THREE.AxesHelper(5))
     scene.background = new THREE.Color(0xe4edf5)
 
-    let board = new Board(0,0,0,5)
+    board = new Board(0,0,0,42)
     let ball = new Ball(-15, 0, 0, 0, 4, 0)
     dice = new Dice(0,3.7,0, 3)
 
@@ -40,8 +40,13 @@ function createScene() {
 }
 
 function traverseElements(obj) {
-    if (obj instanceof SceneObject)
+    if (obj instanceof SceneObject)  {
         obj.update(current_time_offset/40)
+    }
+
+    if (obj.material !== undefined) {
+        obj.material.wireframe = wireframe
+    }
     if (obj !== undefined)
         for (i in obj.children)
             traverseElements(obj.children[i])
