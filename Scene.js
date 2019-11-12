@@ -2,7 +2,7 @@ var persp_camera, ortog_camera //cameras
 var scene, active_camera
 var pedestal, icosahedron, painting
 var spotlights = []
-var directional_light, point_light
+var directional_light, point_light, directional_int, point_int
 var board
 let current_time_offset, prev_time, curr_time
 
@@ -15,7 +15,7 @@ function createScene() {
     'use strict'
 
     scene = new THREE.Scene()
-    scene.add(new THREE.AxesHelper(5))
+    scene.add(new THREE.AxesHelper(30))
     scene.background = new THREE.Color(0xe4edf5)
 
     board = new Board(0,0,0,42)
@@ -26,12 +26,13 @@ function createScene() {
     light_focus.position.set(-1,0, 1)
     scene.add(light_focus)
 
-    directional_light = new THREE.DirectionalLight("white", 1.7)
+    directional_light = new THREE.DirectionalLight("white", directional_int = 0.7)
     directional_light.target = light_focus
+    directional_light.position.set(10, 10, 10)
     scene.add(directional_light)
 
-    point_light = new THREE.PointLight("white", 2)
-    point_light.position.set(-5,10, -5)
+    point_light = new THREE.PointLight("white", point_int = 1.2)
+    point_light.position.set(0,8, 0)
     scene.add(point_light)
 
     scene.add(board)
@@ -61,7 +62,7 @@ function update() {
     if (switches[4]) {
         switches[4] = false
         if (directional_light.intensity === 0)
-            directional_light.intensity = 2
+            directional_light.intensity = directional_int
         else
             directional_light.intensity = 0
     } 
@@ -69,7 +70,7 @@ function update() {
     if (switches[5]) {
         switches[5] = false
         if (point_light.intensity === 0)
-            point_light.intensity = 2
+            point_light.intensity = point_int
         else
             point_light.intensity = 0
         console.log(point_light.intensity)

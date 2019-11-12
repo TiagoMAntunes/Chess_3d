@@ -4,7 +4,13 @@ class Ball extends SceneObject {
 
         //c1,c2,c3 center position
         //x,y,z ball position relative to the center
-        let ball = super.createSceneObjSphere(0,3,0,3, 20, 20, 0, Math.PI * 2, new THREE.MeshPhongMaterial({color: 'red'}))
+        let texture = new THREE.TextureLoader().load("images/monalisa.jpg");
+        texture.wrapS = THREE.ClampToEdgeWrapping;
+        texture.wrapT = THREE.ClampToEdgeWrapping;
+
+        let material = new THREE.MeshPhongMaterial({map: texture, shininess: 70})
+
+        let ball = super.createSceneObjSphere(0,3,0,3, 20, 20, 0, Math.PI * 2, material)
         this.add(ball)
         ball.add(new THREE.AxisHelper(5))
         

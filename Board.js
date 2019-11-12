@@ -2,17 +2,16 @@ class Board extends SceneObject {
     constructor(x,y,z,side_size) {
         super()
 
-        var texture = new THREE.TextureLoader().load("images/checker.jpg");
-        var bump = new THREE.TextureLoader().load("images/wood.jpg")
-        var sideMat = new THREE.MeshPhongMaterial({color: "black", bumpMap: bump, bumpScale: 0.1})
+        let texture = new THREE.TextureLoader().load("images/checker.jpg");
+        let bump = new THREE.TextureLoader().load("images/wood.jpg")
+        let sideMat = new THREE.MeshPhongMaterial({color: "black", bumpMap: bump, bumpScale: 0.1})
 
-        texture.wrapS = THREE.RepeatWrapping;
-        texture.wrapT = THREE.RepeatWrapping;
-        texture.repeat.set( 1, 1 );
+        ttexture.wrapS = THREE.ClampToEdgeWrapping;
+        texture.wrapT = THREE.ClampToEdgeWrapping;
 
-        var materials = [
+        let materials = [
             sideMat, sideMat,
-            new THREE.MeshPhongMaterial({map: texture, bumpMap: bump, bumpScale: 0.1}), 
+            new THREE.MeshPhongMaterial({map: texture, bumpMap: bump, bumpScale: 0.1, shininess: 10}), 
             sideMat, sideMat, sideMat,
         ]
         
