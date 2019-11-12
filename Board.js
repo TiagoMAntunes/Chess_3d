@@ -1,9 +1,23 @@
 class Board extends SceneObject {
     constructor(x,y,z,side_size) {
         super()
+
+        var texture = new THREE.TextureLoader().load("images/checker.jpg");
+        var bump = new THREE.TextureLoader().load("images/wood.jpg")
+        var sideMat = new THREE.MeshPhongMaterial({color: "black", bumpMap: bump, bumpScale: 0.1})
+
+        texture.wrapS = THREE.RepeatWrapping;
+        texture.wrapT = THREE.RepeatWrapping;
+        texture.repeat.set( 1, 1 );
+
+        var materials = [
+            sideMat, sideMat,
+            new THREE.MeshPhongMaterial({map: texture, bumpMap: bump, bumpScale: 0.1}), 
+            sideMat, sideMat, sideMat,
+        ]
         
         let board = new THREE.Object3D()
-        board.add(super.createSceneObjBox(0,0,0, side_size, 2, side_size, new THREE.MeshPhongMaterial({color: "black"})))
+        board.add(super.createSceneObjBox(0,0,0, side_size, 2, side_size, materials))
         /*
         let black = false
         for (let i = -17.5; i < 20; i += 5) {
@@ -14,6 +28,8 @@ class Board extends SceneObject {
             }
         }
         */
+
+
         this.add(board)
 
         
