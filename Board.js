@@ -6,7 +6,7 @@ class Board extends SceneObject {
         let bump = new THREE.TextureLoader().load("images/wood.jpg")
         let sideMat = new THREE.MeshPhongMaterial({color: "black", bumpMap: bump, bumpScale: 0.1})
 
-        ttexture.wrapS = THREE.ClampToEdgeWrapping;
+        texture.wrapS = THREE.ClampToEdgeWrapping;
         texture.wrapT = THREE.ClampToEdgeWrapping;
 
         let materials = [
