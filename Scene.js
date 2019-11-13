@@ -20,7 +20,7 @@ function createScene() {
 
     board = new Board(0,0,0,42)
     let ball = new Ball(-15, 0, 0, 0, 4, 0)
-    dice = new Dice(0,3.7,0, 3)
+    dice = new Dice(0,4,0,3.5)
 
     let light_focus = new THREE.Object3D()
     light_focus.position.set(-1,0, 1)
