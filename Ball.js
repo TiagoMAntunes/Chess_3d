@@ -15,13 +15,23 @@ class Ball extends SceneObject {
         ball.add(new THREE.AxisHelper(5))
         
         ball.position.set(x,y,z)
-        this.position.set(c1,c2,c3)    
+        this.position.set(c1,c2,c3)   
+        this.speed = 5
     }
 
 
     update(time_compensation) {
         //Rotate center -> Move ball around it
-        this.rotateY(Math.PI * 2 / 360 * time_compensation)
-        this.children[0].rotateY(Math.PI * 2 / 360 * time_compensation)
+        if (stopnow) {
+            this.speed -= 0.1
+            if (this.speed < 0)
+                this.speed = 0
+        } else {
+            this.speed += 0.1
+            if (this.speed > 5)
+                this.speed = 5
+        }
+        this.rotateY(Math.PI * 2 / 360 * time_compensation * this.speed * 2 / 5)
+        this.children[0].rotateY(Math.PI * 2 / 360 * time_compensation * this.speed * 2 / 5)
     }
 }

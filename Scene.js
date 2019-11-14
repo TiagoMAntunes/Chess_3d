@@ -32,7 +32,7 @@ function createScene() {
     scene.add(directional_light)
 
     point_light = new THREE.PointLight("white", point_int = 1.2)
-    point_light.position.set(0,8, 0)
+    point_light.position.set(20,8,10)
     scene.add(point_light)
 
     scene.add(board)
