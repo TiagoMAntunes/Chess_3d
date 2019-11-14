@@ -59,8 +59,16 @@ function update() {
     curr_time = performance.now()
     current_time_offset = prev_time === undefined ? 1 : curr_time - prev_time
     
-    if (freeze)
+    if (freeze) {
+        if (restart) {
+            createScene()
+            wireframe = false, stopnow = false, freeze = false
+            switches = [false, false, false, false, false, false]
+            restart = false
+        }
         return
+    }
+        
 
     if (switches[4]) {
         switches[4] = false

@@ -1,6 +1,6 @@
-var renderer, wireframe = true
+var renderer
 var switches = [false, false, false, false, false, false]
-var wireframe = false, stopnow = false, freeze = false
+var wireframe = false, stopnow = false, freeze = false, restart
 
 
 function onKeyDown(e) {
@@ -41,6 +41,12 @@ function onKeyDown(e) {
       case 83:
       case 115:
           freeze = !freeze
+          break
+
+      case 82:
+      case 114:
+          if(freeze)
+            restart = !restart
           break
       
   }
