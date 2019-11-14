@@ -58,6 +58,9 @@ function update() {
     prev_time = curr_time
     curr_time = performance.now()
     current_time_offset = prev_time === undefined ? 1 : curr_time - prev_time
+    
+    if (freeze)
+        return
 
     if (switches[4]) {
         switches[4] = false
