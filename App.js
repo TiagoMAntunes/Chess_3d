@@ -34,12 +34,12 @@ function onKeyDown(e) {
           break
 
       case 66:
-      case 98:
+      case 98: //b
           stopnow = !stopnow
           break
 
       case 83:
-      case 115:
+      case 115: //s
           freeze = !freeze
           break
 

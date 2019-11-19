@@ -1,13 +1,66 @@
-var persp_camera, ortog_camera //cameras
+var persp_camera, ortog_camera, pause_cam //cameras
 var scene, active_camera
 var pedestal, icosahedron, painting
 var spotlights = []
 var directional_light, point_light, directional_int, point_int
-var board
+var board, pause_screen
 let current_time_offset, prev_time, curr_time
 
+var pause_view = {
+    left: 0.5,
+    bottom: 0,
+    width: 0.5,
+    height: 1,
+    background: "pink"
+}
+
+var scene_view = {
+    left: 0,
+    bottom: 0,
+    width: 0.5,
+    height: 1,
+    background: new THREE.Color(0xe4edf5)
+}
+
 function render() {
-    renderer.render(scene, active_camera);
+    let view = scene_view
+
+    let left = Math.floor( window.innerWidth * view.left );
+    let bottom = Math.floor( window.innerHeight * view.bottom );
+    let width = Math.floor( window.innerWidth * view.width );
+    let height = Math.floor( window.innerHeight * view.height );
+        
+    renderer.setViewport( left, bottom, width, height );
+    renderer.setScissor( left, bottom, width, height );
+    renderer.setScissorTest( true );
+    renderer.setClearColor( view.background );
+
+    active_camera.aspect = width / height;
+    active_camera.updateProjectionMatrix();
+        
+    renderer.render(scene, active_camera)
+        
+    if(freeze){
+        view = pause_view
+
+        left = Math.floor( window.innerWidth * view.left );
+        bottom = Math.floor( window.innerHeight * view.bottom );
+        width = Math.floor( window.innerWidth * view.width );
+        height = Math.floor( window.innerHeight * view.height );
+        
+        renderer.setViewport( left, bottom, width, height );
+        renderer.setScissor( left, bottom, width, height );
+        renderer.setScissorTest( true );
+        renderer.setClearColor( view.background );
+
+        pause_cam.left = -width / 2
+        pause_cam.right = width/ 2
+        pause_cam.top = height / 2
+        pause_cam.bottom = -height / 2
+        pause_cam.updateProjectionMatrix()
+
+        renderer.render(scene, pause_cam)
+    }
 }
 
 var dice
@@ -16,11 +69,19 @@ function createScene() {
 
     scene = new THREE.Scene()
     scene.add(new THREE.AxesHelper(30))
-    scene.background = new THREE.Color(0xe4edf5)
 
     board = new Board(0,0,0,42)
     let ball = new Ball(-15, 0, 0, 0, 4, 0)
     dice = new Dice(0,4,0,3.5)
+
+    let pause_texture = new THREE.TextureLoader().load("images/pause.png");
+    pause_texture.wrapS = THREE.ClampToEdgeWrapping;
+    pause_texture.wrapT = THREE.ClampToEdgeWrapping;
+
+    let plane = new THREE.PlaneGeometry(10, 10)
+    let mat = new THREE.MeshBasicMaterial({map: pause_texture})
+    pause_screen = new THREE.Mesh(plane, mat)
+    pause_screen.position.set(0, 0, 50)
 
     let light_focus = new THREE.Object3D()
     light_focus.position.set(-1,0, 1)
@@ -38,6 +99,7 @@ function createScene() {
     scene.add(board)
     scene.add(ball)
     scene.add(dice)
+    scene.add(pause_screen)
 }
 
 function traverseElements(obj) {
@@ -58,9 +120,12 @@ function update() {
     prev_time = curr_time
     curr_time = performance.now()
     current_time_offset = prev_time === undefined ? 1 : curr_time - prev_time
+
+    scene_view.width = 1
     
     if (freeze) {
         console.log('sup')
+        scene_view.width = 0.5
         if (restart) {
             for (i in scene.children) {
                 let child = scene.children[i]
@@ -74,7 +139,6 @@ function update() {
         }
         return
     }
-        
 
     if (switches[4]) {
         switches[4] = false
@@ -100,4 +164,10 @@ function createCameras() {
     active_camera = new THREE.PerspectiveCamera(60, window.outerWidth / window.outerHeight, 1, 1000);
     active_camera.position.set(15,20,40)
     active_camera.lookAt(0,0,0)
+
+    pause_cam = new THREE.OrthographicCamera(5, 5, 10, 10, 0, 10)
+    pause_cam.zoom = 40
+    pause_cam.position.set(0, 0, 51)
+    pause_cam.lookAt(0, 0, 0)
+    pause_cam.updateProjectionMatrix()
 }
