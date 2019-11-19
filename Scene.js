@@ -60,8 +60,14 @@ function update() {
     current_time_offset = prev_time === undefined ? 1 : curr_time - prev_time
     
     if (freeze) {
+        console.log('sup')
         if (restart) {
-            createScene()
+            for (i in scene.children) {
+                let child = scene.children[i]
+                if (['dice', 'ball'].indexOf(child.name) >= 0) {
+                    child.restart()
+                }
+            }
             wireframe = false, stopnow = false, freeze = false
             switches = [false, false, false, false, false, false]
             restart = false

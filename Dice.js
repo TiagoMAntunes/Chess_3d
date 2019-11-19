@@ -41,14 +41,20 @@ class Dice extends SceneObject {
         let materials = [side1, side6, side4, side3, side5, side2]
 
         let dice = super.createSceneObjBox(0,0,0, side_size, side_size, side_size, materials)
-        dice.rotateX(Math.PI / 4) // 45º
-        //dice.rotateY(Math.PI / 4)
+        dice.rotateX(35.264*Math.PI/180) // 35.264º
         dice.rotateZ(Math.PI / 4) // 45º
+        
         this.add(dice)
         this.position.set(x,y,z)
+        this.name = 'dice'
+        this.initRot = new THREE.Vector3(this.rotation.x, this.rotation.y, this.rotation.z)
     }
 
     update(time_diff) {
         this.rotateY(Math.PI * 2 / 360 * time_diff)
+    }
+
+    restart() {
+        this.rotation.set(this.initRot.x, this.initRot.y, this.initRot.z)
     }
 }

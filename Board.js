@@ -30,6 +30,7 @@ class Board extends SceneObject {
 
 
         this.add(board)
+        this.name = 'board'
 
         
 

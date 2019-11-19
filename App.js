@@ -1,6 +1,6 @@
 var renderer
 var switches = [false, false, false, false, false, false]
-var wireframe = false, stopnow = false, freeze = false, restart
+var wireframe = false, stopnow = false, freeze = false, restart = false
 
 
 function onKeyDown(e) {
