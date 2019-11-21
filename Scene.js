@@ -4,12 +4,13 @@ var pedestal, icosahedron, painting
 var spotlights = []
 var directional_light, point_light, directional_int, point_int
 var board, pause_screen
+var origWidth, origHeight, origAspect, smallerDim
 let current_time_offset, prev_time, curr_time
 
 var pause_view = {
-    left: 0.5,
+    left: 0,
     bottom: 0,
-    width: 0.5,
+    width: 1,
     height: 1,
     background: "pink"
 }
@@ -23,7 +24,14 @@ var scene_view = {
 }
 
 function render() {
-    let view = scene_view
+    let view
+
+    if(freeze){
+        view = pause_view
+    }
+    else{
+        view = scene_view
+    }
 
     let left = Math.floor( window.innerWidth * view.left );
     let bottom = Math.floor( window.innerHeight * view.bottom );
@@ -34,25 +42,8 @@ function render() {
     renderer.setScissor( left, bottom, width, height );
     renderer.setScissorTest( true );
     renderer.setClearColor( view.background );
-
-    active_camera.aspect = width / height;
-    active_camera.updateProjectionMatrix();
-        
-    renderer.render(scene, active_camera)
         
     if(freeze){
-        view = pause_view
-
-        left = Math.floor( window.innerWidth * view.left );
-        bottom = Math.floor( window.innerHeight * view.bottom );
-        width = Math.floor( window.innerWidth * view.width );
-        height = Math.floor( window.innerHeight * view.height );
-        
-        renderer.setViewport( left, bottom, width, height );
-        renderer.setScissor( left, bottom, width, height );
-        renderer.setScissorTest( true );
-        renderer.setClearColor( view.background );
-
         pause_cam.left = -width / 2
         pause_cam.right = width/ 2
         pause_cam.top = height / 2
@@ -60,6 +51,12 @@ function render() {
         pause_cam.updateProjectionMatrix()
 
         renderer.render(scene, pause_cam)
+    }
+    else{
+        active_camera.aspect = width / height;
+        active_camera.updateProjectionMatrix();
+        
+        renderer.render(scene, active_camera)
     }
 }
 
@@ -70,6 +67,11 @@ function createScene() {
     scene = new THREE.Scene()
     scene.add(new THREE.AxesHelper(30))
 
+    origWidth = window.innerWidth
+    origHeight = window.innerHeight
+    origAspect = origWidth/origHeight
+    smallerDim = origHeight > origWidth ? origWidth : origHeight
+
     board = new Board(0,0,0,42)
     let ball = new Ball(-15, 0, 0, 0, 4, 0)
     dice = new Dice(0,4,0,3.5)
@@ -78,7 +80,7 @@ function createScene() {
     pause_texture.wrapS = THREE.ClampToEdgeWrapping;
     pause_texture.wrapT = THREE.ClampToEdgeWrapping;
 
-    let plane = new THREE.PlaneGeometry(10, 10)
+    let plane = new THREE.PlaneGeometry(smallerDim/60, smallerDim/60)
     let mat = new THREE.MeshBasicMaterial({map: pause_texture})
     pause_screen = new THREE.Mesh(plane, mat)
     pause_screen.position.set(0, 0, 50)
