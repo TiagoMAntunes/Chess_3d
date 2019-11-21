@@ -18,7 +18,7 @@ var pause_view = {
 var scene_view = {
     left: 0,
     bottom: 0,
-    width: 0.5,
+    width: 1,
     height: 1,
     background: new THREE.Color(0xe4edf5)
 }
@@ -122,12 +122,9 @@ function update() {
     prev_time = curr_time
     curr_time = performance.now()
     current_time_offset = prev_time === undefined ? 1 : curr_time - prev_time
-
-    scene_view.width = 1
     
     if (freeze) {
         console.log('sup')
-        scene_view.width = 0.5
         if (restart) {
             for (i in scene.children) {
                 let child = scene.children[i]

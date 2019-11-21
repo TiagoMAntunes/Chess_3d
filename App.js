@@ -66,19 +66,17 @@ function onResize() {
     //limitar tamanho mínimo da janela
     let view 
 
-    if(freeze){ 
-        view = pause_view 
-
-        if(window.innerWidth/window.innerHeight > origAspect){//height is proportionally smaller
-            pause_screen.scale.set(window.innerHeight/origHeight, window.innerHeight/origHeight, 1)
-        }
-
-        else{//width is smaller
-            pause_screen.scale.set(window.innerWidth/origWidth, window.innerWidth/origWidth, 1)
-        }
-    }
+    if(freeze){ view = pause_view }
 
     else{ view = scene_view }
+
+    if(window.innerWidth/window.innerHeight > origAspect){//height is proportionally smaller
+        pause_screen.scale.set(window.innerHeight/origHeight, window.innerHeight/origHeight, 1)
+    }
+
+    else{//width is smaller
+        pause_screen.scale.set(window.innerWidth/origWidth, window.innerWidth/origWidth, 1)
+    }
 
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.setViewport(view.left, view.bottom, view.width, view.height);
