@@ -112,6 +112,7 @@ function traverseElements(obj) {
     if (obj.material !== undefined) {
         obj.material.wireframe = wireframe
     }
+    
     if (obj !== undefined)
         for (i in obj.children)
             traverseElements(obj.children[i])
@@ -124,11 +125,10 @@ function update() {
     current_time_offset = prev_time === undefined ? 1 : curr_time - prev_time
     
     if (freeze) {
-        console.log('sup')
         if (restart) {
             for (i in scene.children) {
                 let child = scene.children[i]
-                if (['dice', 'ball'].indexOf(child.name) >= 0) {
+                if (child instanceof SceneObject) {
                     child.restart()
                 }
             }

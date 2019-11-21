@@ -66,4 +66,6 @@ class SceneObject extends THREE.Object3D {
     update() {
 
     }
+
+    restart() {}
 }
