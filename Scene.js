@@ -110,9 +110,12 @@ function traverseElements(obj) {
     }
 
     if (obj.material !== undefined) {
-        obj.material.wireframe = wireframe
+        if (Array.isArray(obj.material))
+            obj.material.map(e => {e.wireframe = wireframe})
+        else 
+            obj.material.wireframe = wireframe
     }
-    
+
     if (obj !== undefined)
         for (i in obj.children)
             traverseElements(obj.children[i])
