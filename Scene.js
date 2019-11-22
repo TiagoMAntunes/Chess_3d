@@ -160,6 +160,7 @@ function update() {
     }
 
     traverseElements(scene)
+    pause_screen.material.wireframe = false
 }
 
 function createCameras() {
